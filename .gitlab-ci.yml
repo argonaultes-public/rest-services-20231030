@@ -1,8 +1,22 @@
 image: maven:3-eclipse-temurin-17
 
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+
+
 unit_test:
   stage: test
   script:
   - mvn clean test
   rules:
   - if: '$CI_COMMIT_BRANCH != "main"'
+
+sonarcloud_check:
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - mvn verify sonar:sonar -Dsonar.projectKey=argonaultes-public_rest-service-20231030
+
