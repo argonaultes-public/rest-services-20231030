@@ -31,6 +31,5 @@ test:
     - mvn $MAVEN_CLI_OPTS clean test
   rules:
     - if: $CI_COMMIT_REF_NAME != "main"  # Exécute uniquement sur les branches qui ne sont pas "main"
-  tags:
-    - docker-jdk17  # Tags pour un runner GitLab spécifique avec JDK 17
+
 
